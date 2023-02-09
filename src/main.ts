@@ -11,9 +11,11 @@ async function bootstrap() {
     .setTitle('Recruit CRM APIs')
     .setDescription('APIs for recruit CRM')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/', app, document);
   await app.listen(3000);
 }
+
 bootstrap();

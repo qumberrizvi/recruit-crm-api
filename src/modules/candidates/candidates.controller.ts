@@ -9,10 +9,16 @@ import {
   ParseIntPipe,
   UseInterceptors,
   UploadedFile,
+  UseGuards,
 } from '@nestjs/common';
 import { CandidatesService } from './candidates.service';
 import { CreateCandidateDto } from './dto/create-candidate.dto';
-import { ApiConsumes, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiConsumes,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { Candidate } from './entities/candidate.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -20,8 +26,14 @@ import { diskStorage } from 'multer';
 import { editFileName } from 'src/helpers/file.helper';
 import { ApiOkPaginatedResponse } from '../../decorators/api-ok-paginated-response.decorator';
 import { SearchCandidateDto } from './dto/search-candidate.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('Candidates')
+@ApiBearerAuth()
+@ApiUnauthorizedResponse({
+  description: 'Missing or invalid token',
+})
+@UseGuards(JwtAuthGuard)
 @Controller('candidates')
 export class CandidatesController {
   constructor(private readonly candidatesService: CandidatesService) {}
