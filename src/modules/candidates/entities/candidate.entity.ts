@@ -1,4 +1,5 @@
 import {
+  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
@@ -8,7 +9,7 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('candidates')
-export class Candidate {
+export class Candidate extends BaseEntity {
   @PrimaryGeneratedColumn()
   @ApiProperty()
   id: number;

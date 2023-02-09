@@ -19,6 +19,7 @@ import { CandidatesModule } from './modules/candidates/candidates.module';
       database: process.env.DATABASE_NAME,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: false,
+      logging: ['error'],
     }),
     CandidatesModule,
   ],

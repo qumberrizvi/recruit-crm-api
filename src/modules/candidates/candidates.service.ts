@@ -1,26 +1,41 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCandidateDto } from './dto/create-candidate.dto';
-import { UpdateCandidateDto } from './dto/update-candidate.dto';
+import {
+  IPaginationOptions,
+  paginate,
+  Pagination,
+} from 'nestjs-typeorm-paginate';
+import { Candidate } from './entities/candidate.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class CandidatesService {
-  create(createCandidateDto: CreateCandidateDto) {
-    return 'This action adds a new candidate';
+  constructor(
+    @InjectRepository(Candidate)
+    private readonly repository: Repository<Candidate>,
+  ) {}
+
+  async create(
+    createCandidateDto: CreateCandidateDto,
+    resume?: Express.Multer.File,
+  ): Promise<Candidate> {
+    const candidate = new Candidate();
+    Object.assign(candidate, createCandidateDto);
+    candidate.dob = createCandidateDto.dob?.getMilliseconds();
+    if (resume) {
+      candidate.resume = resume?.path;
+    }
+    return this.repository.create(candidate).save();
   }
 
-  findAll() {
-    return `This action returns all candidates`;
+  findAll(options: IPaginationOptions): Promise<Pagination<Candidate>> {
+    return paginate<Candidate>(this.repository, options);
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} candidate`;
-  }
-
-  update(id: number, updateCandidateDto: UpdateCandidateDto) {
-    return `This action updates a #${id} candidate`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} candidate`;
+    return this.repository.findOneBy({
+      id,
+    });
   }
 }
