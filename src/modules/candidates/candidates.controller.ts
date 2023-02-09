@@ -19,8 +19,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { editFileName } from 'src/helpers/file.helper';
 import { ApiOkPaginatedResponse } from '../../decorators/api-ok-paginated-response.decorator';
+import { SearchCandidateDto } from './dto/search-candidate.dto';
 
-// TODO: Implement search
 @ApiTags('Candidates')
 @Controller('candidates')
 export class CandidatesController {
@@ -53,6 +53,20 @@ export class CandidatesController {
       page,
       limit,
       route: '/candidates',
+    });
+  }
+
+  @ApiOkPaginatedResponse(Candidate)
+  @Get('search')
+  search(
+    @Query() searchOptions: SearchCandidateDto,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
+  ) {
+    return this.candidatesService.search(searchOptions, {
+      page,
+      limit,
+      route: '/candidates/search',
     });
   }
 

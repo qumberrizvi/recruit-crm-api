@@ -15,14 +15,14 @@ import { Transform } from 'class-transformer';
 import { HasMimeType, IsFile, MaxFileSize } from 'nestjs-form-data';
 
 export class CreateCandidateDto {
-  @ApiProperty({ example: 'John' })
+  @ApiProperty({ example: 'John', required: true })
   @IsNotEmpty()
   firstName: string;
 
   @ApiProperty({ required: false, example: 'Doe' })
   @IsOptional()
   @IsString()
-  lastname?: string;
+  lastName?: string;
 
   @ApiProperty({ required: false, example: 'john@example.com' })
   @IsOptional()

@@ -7,7 +7,8 @@ import {
 } from 'nestjs-typeorm-paginate';
 import { Candidate } from './entities/candidate.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
+import { SearchCandidateDto } from './dto/search-candidate.dto';
 
 @Injectable()
 export class CandidatesService {
@@ -36,6 +37,20 @@ export class CandidatesService {
   findOne(id: number) {
     return this.repository.findOneBy({
       id,
+    });
+  }
+
+  search(searchOptions: SearchCandidateDto, options: IPaginationOptions) {
+    return paginate(this.repository, options, {
+      where: {
+        firstName: searchOptions.firstName
+          ? Like(`%${searchOptions.firstName}%`)
+          : null,
+        lastName: searchOptions.lastName
+          ? Like(`%${searchOptions.lastName}%`)
+          : null,
+        email: searchOptions.email ? Like(`%${searchOptions.email}%`) : null,
+      },
     });
   }
 }
