@@ -54,7 +54,7 @@ export class CreateCandidateDto {
   @MaxDate(new Date())
   dob?: Date;
 
-  @ApiProperty({ required: false, example: 'Lucknow, India' })
+  @ApiProperty({ required: false, example: 'Mall Avenue, Lucknow, India' })
   @IsOptional()
   @IsString()
   address?: string;

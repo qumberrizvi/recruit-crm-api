@@ -3,9 +3,7 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
-  Delete,
   Query,
   DefaultValuePipe,
   ParseIntPipe,
@@ -20,6 +18,7 @@ import { Candidate } from './entities/candidate.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { editFileName } from 'src/helpers/file.helper';
+import { ApiOkPaginatedResponse } from '../../decorators/api-ok-paginated-response.decorator';
 
 @ApiTags('Candidates')
 @Controller('candidates')
@@ -44,6 +43,7 @@ export class CandidatesController {
   }
 
   @Get()
+  @ApiOkPaginatedResponse(Candidate)
   findAll(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
@@ -56,7 +56,7 @@ export class CandidatesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string): Promise<Candidate> {
     return this.candidatesService.findOne(+id);
   }
 }
