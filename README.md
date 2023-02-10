@@ -4,6 +4,11 @@
 
 APIs written in NestJS with Express and Typescript
 
+## Prerequisites
+
+- Node >= v18.xx
+- MySQL >= 8
+
 ## Installation
 
 ```bash
