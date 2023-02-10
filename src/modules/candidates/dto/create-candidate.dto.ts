@@ -8,6 +8,7 @@ import {
   IsOptional,
   IsPhoneNumber,
   IsString,
+  Max,
   MaxDate,
 } from 'class-validator';
 import { Gender } from '../../../enums/gender.enum';
@@ -41,11 +42,17 @@ export class CreateCandidateDto {
   @IsEnum(Gender)
   gender?: number;
 
-  // TODO: Break graduations into parts
-  @ApiProperty({ required: false, example: 'Post Graduate' })
+  @ApiProperty({ required: false, example: 'Computer Science' })
   @IsOptional()
   @IsString()
-  qualification?: string;
+  specialisation?: string;
+
+  @ApiProperty({ required: false, example: 2 })
+  @IsOptional()
+  @Transform(({ value }) => value && Number(value))
+  @IsNumber()
+  @Max(30)
+  workExperienceYears?: number;
 
   @ApiProperty({ required: false, example: '1990/12/31' })
   @IsOptional()

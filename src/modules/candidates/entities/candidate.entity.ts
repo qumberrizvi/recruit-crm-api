@@ -35,8 +35,12 @@ export class Candidate extends BaseEntity {
   gender: number;
 
   @Column()
-  @ApiProperty({ example: 'MD' })
-  qualification: string;
+  @ApiProperty({ example: 'Computer Science' })
+  specialisation: string;
+
+  @Column({ name: 'work_ex_years' })
+  @ApiProperty({ example: '2' })
+  workExperienceYears: number;
 
   @Column()
   @ApiProperty({ example: 662601600000 })

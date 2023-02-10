@@ -23,7 +23,7 @@ export class CandidatesService {
   ): Promise<Candidate> {
     const candidate = new Candidate();
     Object.assign(candidate, createCandidateDto);
-    candidate.dob = createCandidateDto.dob?.getMilliseconds();
+    candidate.dob = createCandidateDto.dob?.getTime();
     if (resume) {
       candidate.resume = resume?.path;
     }

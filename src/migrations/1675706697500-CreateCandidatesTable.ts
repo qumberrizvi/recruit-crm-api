@@ -45,10 +45,15 @@ export class CreateCandidatesTable1675706697500 implements MigrationInterface {
             isNullable: true,
           }),
           new TableColumn({
-            name: 'qualification',
+            name: 'specialisation',
             type: 'varchar',
             isNullable: true,
             length: '200',
+          }),
+          new TableColumn({
+            name: 'work_ex_years',
+            type: 'integer',
+            isNullable: true,
           }),
           new TableColumn({
             name: 'dob',
