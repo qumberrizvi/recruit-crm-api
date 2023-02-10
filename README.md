@@ -24,6 +24,9 @@ $ npm install
 ```bash
 $ cp .env.example .env
 ```
+Note: Change database credentials in `.env` as well as in `ormconfig.ts`.
+
+The `ormconfig.ts` file cannot access environment variables while being used by Tyoeorm CLI as DataSource to run migrations.
 
 # Run TypeORM migrations
 
