@@ -23,7 +23,7 @@ import { Pagination } from 'nestjs-typeorm-paginate';
 import { Candidate } from './entities/candidate.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { editFileName } from 'src/helpers/file.helper';
+import { editFileName } from '../../helpers/file.helper';
 import { ApiOkPaginatedResponse } from '../../decorators/api-ok-paginated-response.decorator';
 import { SearchCandidateDto } from './dto/search-candidate.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
